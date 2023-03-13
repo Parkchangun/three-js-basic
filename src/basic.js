@@ -24,10 +24,11 @@ export default function example() {
   scene.background = new THREE.Color("#000000"); // scene >> renderer
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.x = 2;
+  camera.position.y = 2;
   camera.position.z = 5;
-  camera.position.y = 1.5;
-  camera.position.x = 1;
 
+  // 하늘에서 내려다 보는 것처럼 보임 - 원근감 X
   // const camera = new THREE.OrthographicCamera(
   //   -(window.innerWidth / window.innerHeight), // left
   //   window.innerWidth / window.innerHeight, // right
@@ -46,8 +47,17 @@ export default function example() {
 
   scene.add(camera);
 
+  // DirectionalLight: 태양빛과 비슷 위에서 내리쬐는 느낌(색상, 강도)
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+
+  light.position.x = 1;
+  light.position.z = 2;
+
+  scene.add(light);
+
   const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  // MeshBasicMaterial: light에 반응하지 않음
+  const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
   const mesh = new THREE.Mesh(geometry, material);
 
   scene.add(mesh);
