@@ -1,10 +1,20 @@
 import * as THREE from "three";
 
-export default function example01() {
+function setSize(camera, scene, renderer) {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.render(scene, camera);
+}
+
+export default function example() {
   const canvas = document.getElementById("three-canvas");
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
 
   const scene = new THREE.Scene();
 
@@ -38,4 +48,6 @@ export default function example01() {
   scene.add(mesh);
 
   renderer.render(scene, camera);
+
+  window.addEventListener("resize", () => setSize(camera, scene, renderer));
 }
