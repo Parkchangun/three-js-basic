@@ -1,13 +1,5 @@
 import * as THREE from "three";
 
-function setSize(camera, scene, renderer) {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.render(scene, camera);
-}
-
 export default function example() {
   const canvas = document.getElementById("three-canvas");
 
@@ -24,8 +16,8 @@ export default function example() {
   scene.background = new THREE.Color("#000000"); // scene >> renderer
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.x = 2;
-  camera.position.y = 2;
+  // camera.position.x = 2;
+  // camera.position.y = 2;
   camera.position.z = 5;
 
   // 하늘에서 내려다 보는 것처럼 보임 - 원근감 X
@@ -62,7 +54,29 @@ export default function example() {
 
   scene.add(mesh);
 
-  renderer.render(scene, camera);
+  function draw() {
+    // Radian 각도 사용
+    // 360도 = 2파이 360 == 6.3
+    mesh.rotation.y += THREE.MathUtils.degToRad(0.5);
+    mesh.position.y += 0.005;
+
+    if (mesh.position.y > 1) {
+      mesh.position.y = 0;
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  function setSize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.render(scene, camera);
+  }
 
   window.addEventListener("resize", () => setSize(camera, scene, renderer));
+
+  // draw();
+  renderer.setAnimationLoop(draw);
 }
