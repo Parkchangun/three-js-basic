@@ -54,17 +54,23 @@ export default function example() {
 
   scene.add(mesh);
 
+  let animateRef = null;
+
   function draw() {
     // Radian 각도 사용
     // 360도 = 2파이 360 == 6.3
     mesh.rotation.y += THREE.MathUtils.degToRad(0.5);
     mesh.position.y += 0.005;
 
-    if (mesh.position.y > 1) {
-      mesh.position.y = 0;
-    }
-
     renderer.render(scene, camera);
+
+    if (mesh.position.y < 1) {
+      console.log("call request animation frame");
+      animateRef = window.requestAnimationFrame(draw);
+    } else {
+      console.log("end");
+      window.cancelAnimationFrame(animateRef);
+    }
   }
 
   function setSize() {
@@ -77,6 +83,6 @@ export default function example() {
 
   window.addEventListener("resize", () => setSize(camera, scene, renderer));
 
-  // draw();
-  renderer.setAnimationLoop(draw);
+  draw();
+  // renderer.setAnimationLoop(draw);
 }
