@@ -56,19 +56,25 @@ export default function example() {
 
   let animateRef = null;
 
-  const clock = new THREE.Clock();
+  let oldTime = Date.now();
 
   function draw() {
     // 절대 시간
     // const time = clock.getElapsedTime();
     // 이전 시간과 현재 시간의 시간 간격 -> ElapsedTime과 같이 쓰면 절대 안도미
-    const delta = clock.getDelta();
+    // const delta = clock.getDelta();
+
+    const newTime = Date.now();
+    const deltaTime = newTime - oldTime;
+    oldTime = newTime;
 
     // Radian 각도 사용
     // 360도 = 2파이 360 == 6.3
     // mesh.rotation.y += THREE.MathUtils.degToRad(0.5);
-    mesh.rotation.y += delta;
-    mesh.position.y += delta;
+    // mesh.rotation.y += delta;
+    // mesh.position.y += delta;
+    mesh.rotation.y += deltaTime * 0.01;
+    mesh.position.y += deltaTime * 0.001;
 
     renderer.render(scene, camera);
 
