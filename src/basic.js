@@ -56,15 +56,19 @@ export default function example() {
 
   let animateRef = null;
 
+  const clock = new THREE.Clock();
+
   function draw() {
+    const time = clock.getElapsedTime();
     // Radian 각도 사용
     // 360도 = 2파이 360 == 6.3
-    mesh.rotation.y += THREE.MathUtils.degToRad(0.5);
-    mesh.position.y += 0.005;
+    // mesh.rotation.y += THREE.MathUtils.degToRad(0.5);
+    mesh.rotation.y = time;
+    mesh.position.y = time;
 
     renderer.render(scene, camera);
 
-    if (mesh.position.y < 1) {
+    if (mesh.position.y < 1.5) {
       console.log("call request animation frame");
       animateRef = window.requestAnimationFrame(draw);
     } else {
