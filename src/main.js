@@ -1,4 +1,4 @@
-// import example01 from "./ex01.js";
-import example from "./basic";
+// import example from "./basic";
+import fog from "./fog";
 
-example();
+fog();
