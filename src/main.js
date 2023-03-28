@@ -1,4 +1,5 @@
 // import example from "./basic";
-import fog from "./fog";
+// import example from "./fog";
+import example from "./gsap";
 
-fog();
+example();
